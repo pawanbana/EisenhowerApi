@@ -7,8 +7,9 @@ var authenticate=(req,res,next)=>{
    var token= main.replace(/(?:(?:^|.*;\s*)x-auth\s*\=\s*([^;]*).*$)|^.*$/, "$1");
    */
 
+
    var token=req.params.token;
-    
+   
    User.findByToken(token).then((user)=>{
     if(!user){
 
