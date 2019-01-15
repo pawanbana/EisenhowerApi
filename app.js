@@ -65,7 +65,7 @@ app.use(express.static(__dirname+'/views'));
 
 	//Get by id
 	
-	    app.get('/todos/:token/:id',authenticate,(req,res)=>{
+	    app.get('/todos/single/:token/:id',authenticate,(req,res)=>{
 	    	var id =req.params.id;
              if(!ObjectID.isValid(id)){
              	return res.send("id is not valid");
