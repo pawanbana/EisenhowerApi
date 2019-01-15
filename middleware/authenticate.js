@@ -3,9 +3,11 @@ const {User}=require('./../models/user');
 
 var authenticate=(req,res,next)=>{
 
-   var main =req.headers.cookie;
+   /*var main =req.headers.cookie;
    var token= main.replace(/(?:(?:^|.*;\s*)x-auth\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-   
+   */
+
+   var token=req.params.token;
     
    User.findByToken(token).then((user)=>{
     if(!user){

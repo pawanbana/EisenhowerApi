@@ -28,7 +28,7 @@ app.use(express.static(__dirname+'/views'));
      
  
     //Post route
-			app.post('/todos',authenticate,(req,res)=>{
+			app.post('/todos/:token',authenticate,(req,res)=>{
                 
                 var todo=new Todo({
                 	text:req.body.text,
@@ -51,7 +51,7 @@ app.use(express.static(__dirname+'/views'));
      
 
 	//Get Route
-			app.get('/todos',authenticate,(req,res)=>{
+			app.get('/todos/:token',authenticate,(req,res)=>{
 				
 				Todo.find({
           _creater:req.user._id
@@ -65,7 +65,7 @@ app.use(express.static(__dirname+'/views'));
 
 	//Get by id
 	
-	    app.get('/todos/:id',authenticate,(req,res)=>{
+	    app.get('/todos/:token/:id',authenticate,(req,res)=>{
 	    	var id =req.params.id;
              if(!ObjectID.isValid(id)){
              	return res.send("id is not valid");
@@ -88,7 +88,7 @@ app.use(express.static(__dirname+'/views'));
 
 	//Delete Route
 
-	   app.delete('/todos/:id',authenticate,(req,res)=>{
+	   app.delete('/todos/:token/:id',authenticate,(req,res)=>{
 	   	var id=req.params.id;
 	   	if(!ObjectID.isValid(id)){
 	   		return res.send("id is not valid");
@@ -108,7 +108,7 @@ app.use(express.static(__dirname+'/views'));
 
     //update Route
 
-       app.patch("/todos/:id",authenticate,(req,res)=>{
+       app.patch("/todos/:token/:id",authenticate,(req,res)=>{
        	var id =req.params.id;
        	if(!ObjectID.isValid(id)){
        		return res.send("id is not valid");
@@ -158,7 +158,7 @@ app.use(express.static(__dirname+'/views'));
      });
   //get route
 
-  app.get('/users/me',authenticate,(req,res)=>{
+  app.get('/users/me/:token',authenticate,(req,res)=>{
     res.send(req.user);
   });
 
