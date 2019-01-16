@@ -38,7 +38,7 @@ app.use(express.static(__dirname+'/views'));
                 });
 
                todo.save().then((doc)=>{
-               	res.send(doc);
+               	res.status(200).send("successfully Created!!");
                },
                (e)=>{
                	res.status(400).send(e);
@@ -58,7 +58,7 @@ app.use(express.static(__dirname+'/views'));
         }).then((todos)=>{
 					res.send(todos);
 				},(e)=>{
-				 res.send("there might be an error");
+				 res.send("There might be an error");
 				});
 				
 			});		
@@ -68,14 +68,14 @@ app.use(express.static(__dirname+'/views'));
 	    app.get('/todos/single/:token/:id',authenticate,(req,res)=>{
 	    	var id =req.params.id;
              if(!ObjectID.isValid(id)){
-             	return res.send("id is not valid");
+             	return res.send("Id is not valid");
              }
              Todo.findOne({
               _id:id,
               _creater:req.user._id
              }).then((todo)=>{
              	if(!todo){
-                 return res.status(404).send("no such todo is present");
+                 return res.status(404).send("No such todo is present in database it might be deleted");
              	}
              	res.send(todo);
 
@@ -91,16 +91,16 @@ app.use(express.static(__dirname+'/views'));
 	   app.delete('/todos/:token/:id',authenticate,(req,res)=>{
 	   	var id=req.params.id;
 	   	if(!ObjectID.isValid(id)){
-	   		return res.send("id is not valid");
+	   		return res.send("Id is not valid");
 	   	}
 	   	Todo.findOneAndRemove({
         _id:id,
         _creater:req.user._id
       }).then((todo)=>{
 	   		if(!todo){
-	   			return res.send("no item is deleted");
+	   			return res.send("No item is deleted");
 	   		}
-	   		res.send(todo);
+	   		res.send("successfully deleted!!");
 	   	}).catch((e)=>{
 	   		res.status(400).send(e);
 	   	});
@@ -111,17 +111,17 @@ app.use(express.static(__dirname+'/views'));
        app.patch("/todos/:token/:id",authenticate,(req,res)=>{
        	var id =req.params.id;
        	if(!ObjectID.isValid(id)){
-       		return res.send("id is not valid");
+       		return res.send("Id is not valid");
        	}
         var body=req.body;
        	Todo.findOneAndUpdate({_id:id,_creater:req.user._id},{$set:body},{new:true}).then((todo)=>{
        		if(!todo){
-       			return res.status(400).send("no such todo exist");
+       			return res.status(400).send("No such todo exist");
        		}
-       		res.send(todo);
+       		res.send("successfully Updated!!");
 
        	}).catch((e)=>{
-       		res.status(400).send();
+       		res.status(400).send("ERROR!!");
        	});
        });
 
