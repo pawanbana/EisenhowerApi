@@ -149,7 +149,7 @@ app.use(express.static(__dirname+'/views'));
          }).then((token)=>{
           
           res.setHeader('Set-Cookie',[`x-auth=${token}`]);
-          res.send(`You are successfully logged in and your access token is : ${token}`);
+          res.send({token});
          }).catch((e)=>{
         
           res.status(400).send('Error!');
@@ -173,7 +173,7 @@ app.use(express.static(__dirname+'/views'));
          return user.generateAuthToken();
          }).then((token)=>{
             
-          res.send(`Token is :${token}`);
+          res.send({token});
             
           })
           .catch((e)=>{
